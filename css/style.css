@@ -19,6 +19,21 @@
     --basic-radius: 10px;
 }
 
+
+
+/* UTILITY */
+.container-70 {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.d-none {
+    display: none;
+}
+
+
+
+/* COMMON */
 body {
     background-color: var(--primary-color);
     color: var(--secondary-color);
@@ -32,17 +47,6 @@ main {
     padding: 20px 0;
 }
 
-
-
-/* UTILITY */
-.container-70 {
-    width: 70%;
-    margin: 0 auto;
-}
-
-
-
-/* COMMON */
 main > .container-70 {
     display: flex;
     justify-content: space-between;
