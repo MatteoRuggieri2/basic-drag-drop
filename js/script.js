@@ -3,6 +3,34 @@ const columns = document.querySelectorAll(".column");
 const tasks = document.querySelectorAll(".task");
 let dragItem = null;
 
+const data = [
+    {
+        id: 0,
+        name: "In coda",
+        tasks: [
+            {id: 0, name: "Rispondere alle email"},
+            {id: 1, name: "Allenare le gambe"},
+            {id: 2, name: "Ricaricare credito telefono"},
+            {id: 3, name: "Prenotare visita dentista"}
+        ]
+    },
+    {
+        id: 1,
+        name: "Aperto",
+        tasks: []
+    },
+    {
+        id: 2,
+        name: "In revisione",
+        tasks: []
+    },
+    {
+        id: 3,
+        name: "Completato",
+        tasks: []
+    },
+]
+
 // EVENTI DRAG E DROP
 // (https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API#concepts_and_usage)
 /*
