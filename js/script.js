@@ -1,6 +1,7 @@
 // Seleziono tutte le colonne e tutti i task
 const columns = document.querySelectorAll(".column");
 const tasks = document.querySelectorAll(".task");
+let dragItem = null;
 
 // EVENTI DRAG E DROP
 // (https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API#concepts_and_usage)
@@ -36,11 +37,21 @@ columns.forEach(column => {
 // FUNCTIONS
 function dragStart() {
     console.log("dragStart");
+
+    /* Appena afferro l'elemento lo nascondo aggiungendo la classe css.
+    Il tutto però è talmente rapido da non permettermi di draggarlo, per
+    questo motivo devo aggiungere un deelay minimo */
+    setTimeout(() => this.classList.add("d-none"), 0)
+
+    // Salvo l'elemento correntemente draggato
+    dragItem = this;
     
 }
 
 function dragEnd() {
     console.log("dragEnd");
+    dragItem.classList.remove("d-none"); // Quando finisce il drag lo rendo di nuovo visibile, togliendo d-none
+    dragItem = null;
     
 }
 
@@ -62,5 +73,8 @@ function dragLeave() {
 
 function dragDrop() {
     console.log("dragDrop");
+
+    // Appendo alla colonna il task correntemente draggato (dragItem)
+    this.append(dragItem);
     
 }
