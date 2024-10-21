@@ -1,8 +1,3 @@
-// Seleziono tutte le colonne e tutti i task
-const columns = document.querySelectorAll(".column");
-const tasks = document.querySelectorAll(".task");
-let dragItem = null;
-
 const data = [
     {
         id: 0,
@@ -31,38 +26,21 @@ const data = [
     },
 ]
 
+//? SAMPLE HTML
 /* <section class="column">
     <h2 class="column-title">Iniziati</h2>
     <div class="task" draggable="true">Terminare l'esercizio di base del drag e drop</div>
 </section> */
 
+
 // CREAZIONE DINAMICA COLONNA E TASK
 const columnsContainer = document.querySelector("#columns-container");
+generateTasks(data);
 
-data.forEach(column => {
-
-    const newColumn = document.createElement("section"); // Colonna
-    newColumn.classList.add("column");
-    newColumn.setAttribute("data-id", column.id);
-    const columnTitle = document.createElement("h2");
-    columnTitle.classList.add("column-title");
-    columnTitle.textContent = column.name;
-    newColumn.append(columnTitle);
-
-    column.tasks.forEach(task => {
-
-        const newTask = document.createElement("div"); // Task
-        newTask.classList.add("task");
-        newTask.setAttribute("draggable", true);
-        newTask.setAttribute("data-id", task.id);
-        newTask.textContent = task.name;
-        newColumn.append(newTask);
-    })
-    
-    columnsContainer.append(newColumn);
-})
-
-
+// Seleziono tutte le colonne e tutti i task
+const columns = document.querySelectorAll(".column");
+const tasks = document.querySelectorAll(".task");
+let dragItem = null;
 
 
 
@@ -142,4 +120,31 @@ function dragDrop() {
     // Appendo alla colonna il task correntemente draggato (dragItem)
     this.append(dragItem);
     
+}
+
+/* Questa funzione si occupa di prendere l'array contenente le colonne
+e i task, e generarli in modo dinamico. */
+function generateTasks(data) {
+    data.forEach(column => {
+
+        const newColumn = document.createElement("section"); // Colonna
+        newColumn.classList.add("column");
+        newColumn.setAttribute("data-id", column.id);
+        const columnTitle = document.createElement("h2");
+        columnTitle.classList.add("column-title");
+        columnTitle.textContent = column.name;
+        newColumn.append(columnTitle);
+    
+        column.tasks.forEach(task => {
+    
+            const newTask = document.createElement("div"); // Task
+            newTask.classList.add("task");
+            newTask.setAttribute("draggable", true);
+            newTask.setAttribute("data-id", task.id);
+            newTask.textContent = task.name;
+            newColumn.append(newTask);
+        })
+        
+        columnsContainer.append(newColumn);
+    })
 }
