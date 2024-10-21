@@ -41,6 +41,7 @@ generateTasks(data);
 const columns = document.querySelectorAll(".column");
 const tasks = document.querySelectorAll(".task");
 let dragItem = null;
+let dragData = null;
 
 
 
@@ -89,29 +90,42 @@ function dragStart() {
     // Salvo l'elemento correntemente draggato
     dragItem = this;
     
+    // Prendo l'indice della colonna dove ho preso il task
+    const startColumnIndex = data.findIndex(column => {
+        return column.id == this.parentElement.getAttribute("data-id");
+    })
+
+    // Prendo l'indice dell'array del task che ho preso
+    const taskIndex = data[startColumnIndex].tasks.findIndex(task => {
+        return task.id == this.getAttribute("data-id");
+    })
+
+    // Rimuovo il task dalla colonna nell'array e lo memorizzo per salvarlo una volta droppato
+    dragData = data[startColumnIndex].tasks.splice(taskIndex, 1);
+    
+    
 }
 
 function dragEnd() {
     console.log("dragEnd");
     dragItem.classList.remove("d-none"); // Quando finisce il drag lo rendo di nuovo visibile, togliendo d-none
     dragItem = null;
-    
+
+    // Salvo il task nell'array
+    data[this.parentElement.getAttribute("data-id")].tasks.push(dragData[0]);
 }
 
 function dragOver(e) {
     e.preventDefault();  // L'evento dragover, di default, ci blocca "dragdrop", per evitarlo quindi usiamo preventDefault
     console.log("dragOver");
-    
 }
 
 function dragEnter() {
     console.log("dragEnter");
-    
 }
 
 function dragLeave() {
     console.log("dragLeave");
-    
 }
 
 function dragDrop() {
@@ -119,7 +133,6 @@ function dragDrop() {
 
     // Appendo alla colonna il task correntemente draggato (dragItem)
     this.append(dragItem);
-    
 }
 
 /* Questa funzione si occupa di prendere l'array contenente le colonne
@@ -127,7 +140,7 @@ e i task, e generarli in modo dinamico. */
 function generateTasks(data) {
     data.forEach(column => {
 
-        const newColumn = document.createElement("section"); // Colonna
+        const newColumn = document.createElement("section"); //! Colonna
         newColumn.classList.add("column");
         newColumn.setAttribute("data-id", column.id);
         const columnTitle = document.createElement("h2");
@@ -137,7 +150,7 @@ function generateTasks(data) {
     
         column.tasks.forEach(task => {
     
-            const newTask = document.createElement("div"); // Task
+            const newTask = document.createElement("div"); //! Task
             newTask.classList.add("task");
             newTask.setAttribute("draggable", true);
             newTask.setAttribute("data-id", task.id);
