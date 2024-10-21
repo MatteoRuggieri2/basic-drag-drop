@@ -1,4 +1,4 @@
-const data = [
+const placeholderData = [
     {
         id: 0,
         name: "In coda",
@@ -25,6 +25,11 @@ const data = [
         tasks: []
     },
 ]
+
+
+
+// Se c'è una versione del db nel local storage uso quella, altrimenti uso i placeholder
+let data = localStorage.getItem("db_data") ? JSON.parse(localStorage.getItem("db_data")) : placeholderData;
 
 //? SAMPLE HTML
 /* <section class="column">
@@ -113,6 +118,9 @@ function dragEnd() {
 
     // Salvo il task nell'array
     data[this.parentElement.getAttribute("data-id")].tasks.push(dragData[0]);
+
+    // Aggiorno lo stato dell'array nel Local Storage del Browser
+    localStorage.setItem("db_data", JSON.stringify(data));
 }
 
 function dragOver(e) {
